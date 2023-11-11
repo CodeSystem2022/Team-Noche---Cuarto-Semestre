@@ -250,5 +250,4 @@ export const eliminarTarea = (req, res) => res.send('eliminando tarea unica');
 }
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# CONTRERAS YAMILA BELEN
-# 6.3 Método para listarTareas (en plural)
+
