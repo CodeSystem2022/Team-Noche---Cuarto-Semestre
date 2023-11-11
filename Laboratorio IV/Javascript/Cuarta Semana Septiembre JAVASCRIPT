@@ -1,0 +1,252 @@
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# CONTRERAS YAMILA BELEN
+# 6.1 Conexión con la base de datos
+import pg from "pg";
+
+export const pool = new pg.Pool ({
+    port: 5432,
+    host: "localhost",
+    user: "postgres",
+    password: "admin",
+
+});
+
+pool.on("conect", () => {
+    console.log("conectado a la base de datos");
+})
+
+
+
+import app from "./app.js";
+import { pool } from "./db.js";
+
+pool.query("SELECT NOW()", (err, res) => {
+    console.log(err, res);
+    app.listen(3000, () => {
+        console.log("Server on port", 3000);
+    });
+    pool.end();
+});
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# CONTRERAS YAMILA BELEN
+# 6.2 Comenzamos con la conexión de crearTareas
+# Parte 1: Aseguramos que lo que viene del front o el cliente funcione
+export const listarTareas = (req, res) => res.send('obteniendo tareas');
+
+export const obtenerTareaUnica = (req, res) => res.send('obteniendo tarea unica');
+
+export const crearTarea = (req, res) => {
+    console.log(req.body);
+    res.send('creando tarea');
+}
+
+export const actualizarTarea = (req, res) => res.send('actualizando tarea unica');
+
+export const eliminarTarea = (req, res) => res.send('eliminando tarea unica');
+
+
+JSON Content
+
+{
+    "titulo": "Tareas"
+}
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# CONTRERAS YAMILA BELEN
+# 6.2 Comenzamos con la conexión de crearTareas
+# Parte 2: Se crea la base de datos y la tabla => se configura el archivo db.js
+
+CREATE TABLE tareas (
+    id SERIAL PRIMARY KeyboardEvent,
+    titulo VARCHAR(255 UNIQUE NOT null,
+        descripcion Text,)
+);
+
+import pg from "pg";
+
+export const pool = new pg.Pool ({
+    port: 5432,
+    host: "localhost",
+    user: "postgres",
+    password: "admin",
+    database: "PERN",
+
+});
+
+pool.on("conect", () => {
+    console.log("conectado a la base de datos");
+})
+
+import {pool} from '../db.js';
+
+export const listarTareas = (req, res) => res.send('obteniendo tareas');
+
+export const obtenerTareaUnica = (req, res) => res.send('obteniendo tarea unica');
+
+export const crearTarea = async (req, res) => {
+    const { titulo, descripcion } = req.body;
+    res.send('creando tarea');
+
+    const {rows} = await pool.query('INSERT INTO tareas (titulo, descripcion) VALUES ($1, $2)', [titulo,descripcion]);
+    console.log(rows)
+
+}
+
+export const actualizarTarea = (req, res) => res.send('actualizando tarea unica');
+
+export const eliminarTarea = (req, res) => res.send('eliminando tarea unica');
+
+//JSON Content
+
+{
+    "titulo": "Tarea 1",
+    "descripcion": "mi descripcion",
+}
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# CONTRERAS YAMILA BELEN
+# 6.2 Comenzamos con la conexión de crearTareas
+# Parte 3 Pruebas y manejo de errores
+
+import {pool} from '../db.js';
+
+export const listarTareas = (req, res) => res.send('obteniendo tareas');
+
+export const obtenerTareaUnica = (req, res) => res.send('obteniendo tarea unica');
+
+export const crearTarea = async (req, res) => {
+    const { titulo, descripcion } = req.body;
+    
+    try { const {rows } = await pool.query('INSERT INTO tareas ( titulo, descripcion ) VALUES ($1, $2)', [ titulo, descripcion]);
+    console.log(rows);
+    res.send('creando tarea');
+    } catch (error) {
+        if (error.code === '2305') {
+            return res.send('ya existe una tarea con ese titulo');
+        }
+
+    } return res.send('algo salio mal');
+}
+
+export const actualizarTarea = (req, res) => res.send('actualizando tarea unica');
+
+export const eliminarTarea = (req, res) => res.send('eliminando tarea unica');
+
+
+
+import {pool} from '../db.js';
+
+export const listarTareas = (req, res) => res.send('obteniendo tareas');
+
+export const obtenerTareaUnica = (req, res) => res.send('obteniendo tarea unica');
+
+export const crearTarea = async (req, res, next) => {
+    const { titulo, descripcion } = req.body;
+    
+    try { 
+        throw new Error('algo salio mal');
+        const {rows } = await pool.query('INSERT INTO tareas ( titulo, descripcion ) VALUES ($1, $2)', [ titulo, descripcion]);
+        console.log(rows);
+        res.send('creando tarea');
+    } catch (error) {
+        if (error.code === '2305') {
+            return res.send('ya existe una tarea con ese titulo');
+        }
+        console.log(error);
+        next(error);
+
+    } 
+}
+
+export const actualizarTarea = (req, res) => res.send('actualizando tarea unica');
+
+export const eliminarTarea = (req, res) => res.send('eliminando tarea unica');
+
+//JSON Content
+
+{
+    "titulo": "Tarea 2",
+    "descripcion": "mi descripcion",
+}
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# CONTRERAS YAMILA BELEN
+# 6.2 Comenzamos con la conexión de crearTareas
+# Parte 4
+
+import {pool} from '../db.js';
+
+export const listarTareas = (req, res) => res.send('obteniendo tareas');
+
+export const obtenerTareaUnica = (req, res) => res.send('obteniendo tarea unica');
+
+export const crearTarea = async (req, res, next) => {
+    const { titulo, descripcion } = req.body;
+    
+    try { 
+        const result = await pool.query('INSERT INTO tareas ( titulo, descripcion ) VALUES ($1, $2) RETURNING *', [ titulo, descripcion]);
+        res.json(res.rows[0]);
+    } catch (error) {
+        if (error.code === '2305') {
+            return res.send('ya existe una tarea con ese titulo');
+        }
+        console.log(error);
+        next(error);
+
+    } 
+}
+
+export const actualizarTarea = (req, res) => res.send('actualizando tarea unica');
+
+export const eliminarTarea = (req, res) => res.send('eliminando tarea unica');
+
+//JSON Content
+
+{
+    "titulo": "Tarea 5",
+    "descripcion": "mi descripcion",
+}
+
+
+
+import {pool} from '../db.js';
+
+export const listarTareas = (req, res) => res.send('obteniendo tareas');
+
+export const obtenerTareaUnica = (req, res) => res.send('obteniendo tarea unica');
+
+export const crearTarea = async (req, res, next) => {
+    const { titulo, descripcion } = req.body;
+    
+    try { 
+        const result = await pool.query('INSERT INTO tareas ( titulo, descripcion ) VALUES ($1, $2) RETURNING *', [ titulo, descripcion]);
+        res.json(res.rows[0]);
+        console.log(result.rows[0]);
+    } catch (error) {
+        if (error.code === '2305') {
+            return res.send('ya existe una tarea con ese titulo');
+        }
+        console.log(error);
+        next(error);
+
+    } 
+}
+
+export const actualizarTarea = (req, res) => res.send('actualizando tarea unica');
+
+export const eliminarTarea = (req, res) => res.send('eliminando tarea unica');
+
+//JSON Content
+
+{
+    "titulo": "Tarea 5",
+    "descripcion": "mi descripcion",
+}
+
+{
+    "titulo": "Tarea 5",
+    "descripcion": "mi descripcion",
+}
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
