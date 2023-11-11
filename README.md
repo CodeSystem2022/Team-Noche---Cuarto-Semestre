@@ -13,10 +13,12 @@ Aqui se subiran las actividades del cuarto semestre de
 
 
 # METODOLOGIA DE SISTEMAS 2023
-![JAVA](https://user-images.githubusercontent.com/101668956/235322831-96f83c16-379e-4926-a966-447de48d8f42.png)
+
+![java-node](https://github.com/CodeSystem2022/Team-Noche---Cuarto-Semestre/assets/111473222/27abe9a8-67a7-4a67-b4dd-d1ae9219fac6)
 
 
 Integrantes de TEAM NOCHE:  
+
 • [Alvarenga, Analia](https://github.com/RastaLunaRL)  
 • [Contreras, Yamila](https://github.com/Yami-Contreras)  
 • [González, María Del Carmen](https://github.com/uninstallrar)  
