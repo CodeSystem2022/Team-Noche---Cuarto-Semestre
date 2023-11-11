@@ -1,5 +1,7 @@
 # TeamNoche-Cuarto-Semestre
-<img src="https://user-images.githubusercontent.com/101668956/235321849-c1ba3554-2854-4295-9dff-1c4eba771c52.jpg" alt="Imagen aleatoria" style="border: 5px solid blue">
+
+ ![teamnoche](https://github.com/CodeSystem2022/Team-Noche---Cuarto-Semestre/assets/111473222/98e8d2f8-81c5-4b30-a2ba-fc32453fa529)
+
 
 TEAM NOCHE es un equipo de entusiastas que se enfrentan al reto de dominar el arte de la programación. Con dedicación, esfuerzo y curiosidad, van adquiriendo los conocimientos y habilidades necesarios para crear soluciones innovadoras y eficientes. Cada día es una oportunidad para aprender algo nuevo, resolver problemas, compartir experiencias y apoyarse mutuamente. Su pasión por la programación les impulsa a superar sus propios límites y a disfrutar del proceso de aprendizaje.
 
